@@ -56,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Função para gerar o código PIX
     async function gerarCodigoPix(dados) {
         try {
-            const response = await fetch('/gerar-pix', {
+            const response = await fetch('/api/gerar-pix', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

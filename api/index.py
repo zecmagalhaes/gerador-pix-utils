@@ -27,36 +27,41 @@ def gerar_codigo_pix(key, name, city, value, identifier):
     codigo_completo = f"{payload}{crc16:04X}"
     return codigo_completo
 
+@app.route('/api/gerar-pix', methods=['POST'])
+def gerar_pix_handler():
+    try:
+        dados = request.get_json()
+        
+        # Validação dos dados
+        if not all(key in dados for key in ['key', 'name', 'city', 'value', 'identifier']):
+            return jsonify({'erro': 'Dados incompletos'}), 400
+
+        # Validação do identificador
+        if not re.match(r'^\d{1,8}$', dados['identifier']):
+            return jsonify({'erro': 'Identificador inválido'}), 400
+
+        # Validação do valor
+        if not isinstance(dados['value'], (int, float)) or dados['value'] <= 0:
+            return jsonify({'erro': 'Valor inválido'}), 400
+
+        codigo = gerar_codigo_pix(
+            dados['key'],
+            dados['name'],
+            dados['city'],
+            dados['value'],
+            dados['identifier']
+        )
+
+        return jsonify({'codigo': codigo})
+
+    except Exception as e:
+        return jsonify({'erro': 'Erro ao gerar código PIX'}), 500
+
+# Handler para Vercel Serverless
 def handler(request):
-    if request.method == 'POST':
-        try:
-            dados = request.get_json()
-            
-            # Validação dos dados
-            if not all(key in dados for key in ['key', 'name', 'city', 'value', 'identifier']):
-                return jsonify({'erro': 'Dados incompletos'}), 400
-
-            # Validação do identificador
-            if not re.match(r'^\d{1,8}$', dados['identifier']):
-                return jsonify({'erro': 'Identificador inválido'}), 400
-
-            # Validação do valor
-            if not isinstance(dados['value'], (int, float)) or dados['value'] <= 0:
-                return jsonify({'erro': 'Valor inválido'}), 400
-
-            codigo = gerar_codigo_pix(
-                dados['key'],
-                dados['name'],
-                dados['city'],
-                dados['value'],
-                dados['identifier']
-            )
-
-            return jsonify({'codigo': codigo})
-
-        except Exception as e:
-            return jsonify({'erro': 'Erro ao gerar código PIX'}), 500
-
+    if request.method == "POST":
+        with app.request_context(request):
+            return gerar_pix_handler()
     return jsonify({'erro': 'Método não permitido'}), 405
 
 # Rota para a Vercel

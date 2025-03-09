@@ -24,12 +24,16 @@
     ],
     "routes": [
         {
-            "src": "/gerar-pix",
+            "src": "/api/gerar-pix",
             "dest": "api/index.py"
         },
         {
             "src": "/(.*)",
             "dest": "/$1"
         }
-    ]
+    ],
+    "env": {
+        "FLASK_ENV": "production",
+        "FLASK_APP": "api/index.py"
+    }
 } 
