@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>Gerador de PIX</title>
+    
+    <!-- Meta tags principais -->
+    <meta name="description" content="Gerador de códigos PIX rápido e fácil">
+    <meta name="application-name" content="PIX Gen">
+    <meta name="format-detection" content="telephone=no">
+    
+    <!-- Meta tags PWA -->
+    <meta name="theme-color" content="#0984e3">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    <!-- Meta tags para compatibilidade com iOS (backwards compatibility) -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="PIX Gen">
+    
+    <!-- Ícones para iOS -->
+    <link rel="apple-touch-icon" href="assets/images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="assets/images/apple-touch-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/images/apple-touch-icon-180x180.png">
+    <link rel="apple-touch-icon" sizes="167x167" href="assets/images/apple-touch-icon-167x167.png">
+    
+    <!-- Splash screens para iOS -->
+    <!-- iPhone X (1125px x 2436px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3)" href="assets/images/apple-splash-1125x2436.png">
+    <!-- iPhone 8, 7, 6s, 6 (750px x 1334px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2)" href="assets/images/apple-splash-750x1334.png">
+    <!-- iPhone 8 Plus, 7 Plus, 6s Plus, 6 Plus (1242px x 2208px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3)" href="assets/images/apple-splash-1242x2208.png">
+    <!-- iPad Pro 12.9" (2048px x 2732px) -->
+    <link rel="apple-touch-startup-image" media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)" href="assets/images/apple-splash-2048x2732.png">
+    
+    <!-- PWA manifest -->
+    <link rel="manifest" href="manifest.json">
+    
+    <!-- Favicon tradicional -->
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/images/favicon-16x16.png">
+    
+    <!-- Estilos -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gerador de PIX</h1>
+        <form id="pixForm">
+            <div class="form-group">
+                <label for="key">Chave PIX:</label>
+                <input type="text" id="key" name="key" placeholder="Digite sua chave PIX" required>
+            </div>
+            <div class="form-group">
+                <label for="name">Nome do Recebedor:</label>
+                <input type="text" id="name" name="name" placeholder="Digite o nome completo" required>
+            </div>
+            <div class="form-group">
+                <label for="city">Cidade:</label>
+                <input type="text" id="city" name="city" placeholder="Digite a cidade" required>
+            </div>
+            <div class="form-group">
+                <label for="value">Valor (R$):</label>
+                <input type="number" id="value" name="value" step="0.01" min="0.01" placeholder="0.00" required>
+            </div>
+            <div class="form-group">
+                <label for="identifier">Identificador (até 8 números):</label>
+                <input type="text" id="identifier" name="identifier" maxlength="8" pattern="\d{1,8}" placeholder="Digite o identificador" required>
+            </div>
+            <button type="submit" class="btn-gerar">Gerar PIX</button>
+        </form>
+
+        <div id="resultadoPix" class="resultado-pix" style="display: none;">
+            <button id="btnCopiar" class="btn-copiar">Copiar Código PIX</button>
+        </div>
+    </div>
+
+    <div id="notificacao" class="notificacao"></div>
+    <script src="script.js"></script>
+</body>
+</html> 

@@ -1,0 +1,38 @@
+{
+    "name": "Gerador de PIX",
+    "short_name": "PIX Gen",
+    "description": "Gerador de códigos PIX",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#0984e3",
+    "orientation": "portrait",
+    "display_override": ["fullscreen", "standalone"],
+    "icons": [
+        {
+            "src": "assets/images/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "assets/images/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "any maskable"
+        }
+    ],
+    "prefer_related_applications": false,
+    "categories": ["finance", "utilities"],
+    "shortcuts": [
+        {
+            "name": "Gerar PIX",
+            "url": "/",
+            "description": "Gerar novo código PIX"
+        }
+    ],
+    "gcm_sender_id": "YOUR_SENDER_ID",
+    "permissions": [
+        "notifications"
+    ]
+} 
