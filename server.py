@@ -6,7 +6,13 @@ import unidecode  # Para remover acentos
 
 app = Flask(__name__, static_folder='.')
 app.config['JSON_AS_ASCII'] = False  # Permite caracteres UTF-8 no JSON
-CORS(app, resources={r"/*": {"origins": "*"}})
+CORS(app, resources={
+    r"/*": {
+        "origins": "*",
+        "methods": ["GET", "POST", "OPTIONS"],
+        "allow_headers": ["Content-Type"]
+    }
+})
 
 @app.route('/')
 def index():
@@ -16,13 +22,10 @@ def index():
 def serve_static(path):
     return send_from_directory('.', path)
 
-@app.route('/gerar-pix', methods=['POST', 'OPTIONS'])
+@app.route('/api/gerar-pix', methods=['POST', 'OPTIONS'])
 def gerar_pix():
     if request.method == 'OPTIONS':
-        response = app.make_default_options_response()
-        response.headers['Access-Control-Allow-Methods'] = 'POST'
-        response.headers['Access-Control-Allow-Headers'] = 'Content-Type'
-        return response
+        return '', 204
 
     try:
         dados = request.get_json()
@@ -38,11 +41,16 @@ def gerar_pix():
         name_sem_acento = unidecode.unidecode(dados['name'])
         city_sem_acento = unidecode.unidecode(dados['city'])
         
+        try:
+            valor = float(dados['value'])
+        except ValueError:
+            return jsonify({'erro': 'Valor inválido'}), 400
+        
         codigo = Code(
             key=dados['key'],
             name=name_sem_acento,
             city=city_sem_acento,
-            value=float(dados['value']),
+            value=valor,
             identifier=dados['identifier']
         )
         
@@ -53,4 +61,5 @@ def gerar_pix():
         return jsonify({'erro': str(e)}), 500
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) 
+    port = int(os.environ.get('PORT', 5000))
+    app.run(host='0.0.0.0', port=port, debug=True) 
