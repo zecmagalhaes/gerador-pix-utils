@@ -27,8 +27,7 @@ def gerar_codigo_pix(key, name, city, value, identifier):
     codigo_completo = f"{payload}{crc16:04X}"
     return codigo_completo
 
-@app.route('/api/gerar-pix', methods=['POST'])
-def gerar_pix_handler():
+def process_request(request):
     try:
         dados = request.get_json()
         
@@ -60,8 +59,7 @@ def gerar_pix_handler():
 # Handler para Vercel Serverless
 def handler(request):
     if request.method == "POST":
-        with app.request_context(request):
-            return gerar_pix_handler()
+        return process_request(request)
     return jsonify({'erro': 'Método não permitido'}), 405
 
 # Rota para a Vercel

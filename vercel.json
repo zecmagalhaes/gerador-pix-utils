@@ -29,6 +29,7 @@
     "routes": [
         {
             "src": "/api/gerar-pix",
+            "methods": ["POST"],
             "dest": "/api/index.py"
         },
         {
@@ -41,6 +42,10 @@
             "headers": {
                 "cache-control": "s-maxage=0"
             }
+        },
+        {
+            "src": "/assets/(.*)",
+            "dest": "/assets/$1"
         },
         {
             "src": "/(.*)",

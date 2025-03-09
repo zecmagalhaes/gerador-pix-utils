@@ -59,7 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch('/api/gerar-pix', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(dados)
             });
