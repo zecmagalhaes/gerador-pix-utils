@@ -18,6 +18,10 @@
             "use": "@vercel/static"
         },
         {
+            "src": "*.json",
+            "use": "@vercel/static"
+        },
+        {
             "src": "assets/**",
             "use": "@vercel/static"
         }
@@ -25,7 +29,18 @@
     "routes": [
         {
             "src": "/api/gerar-pix",
-            "dest": "api/index.py"
+            "dest": "/api/index.py"
+        },
+        {
+            "src": "/manifest.json",
+            "dest": "/manifest.json"
+        },
+        {
+            "src": "/service-worker.js",
+            "dest": "/service-worker.js",
+            "headers": {
+                "cache-control": "s-maxage=0"
+            }
         },
         {
             "src": "/(.*)",
